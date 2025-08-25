@@ -1,0 +1,10 @@
+abstract class Routes {
+  static const HOME = '/home';
+  static const LOGIN = '/login';
+  static const SIGNUP = '/signup';
+  static const HOME_PAGE = '/home-page';
+  static const BOTTOM_NAV_BAR = '/bottom-nav-bar';
+  static const SETTINGS = '/settings';
+  static const STORAGE_DETAILS = '/storage-details';
+  static const PROFILE = '/profile';
+}
