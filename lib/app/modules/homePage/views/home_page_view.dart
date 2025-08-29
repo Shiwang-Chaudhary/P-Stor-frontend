@@ -95,30 +95,52 @@ class HomePageView extends GetView<HomePageController> {
             const SizedBox(
               height: 20,
             ),
-            GridView.builder(
-                shrinkWrap: true, // let GridView only use the height it needs
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // number of columns
-                  mainAxisSpacing: 14, // vertical space between items
-                  crossAxisSpacing: 12, // horizontal space between items
-                  childAspectRatio: 1.2, // width/height ratio of each item
+           Obx(() =>  controller.files.isEmpty?
+            const Center(child: Column(
+              children: [
+                CircularProgressIndicator(
+                  color: Colors.blueAccent,
                 ),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                 //final String name = controller.files[index]["fileName"];
-                  return SizedBox(
-                      height: 100,
-                      child: CustomContainer(
-                        icon: Icons.file_copy,
-                        iconColor: Colors.white,
-                        text: "File 1",
-                        ontap: () {},
-                      ));
-                })
+                SizedBox(height: 20,),
+                CustomText(text: "No files found",color: Colors.white,size: 20,)
+              ],
+            ))
+            :
+            GridView.builder(
+              shrinkWrap: true, // let GridView only use the height it needs
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // number of columns
+                mainAxisSpacing: 14, // vertical space between items
+                crossAxisSpacing: 12, // horizontal space between items
+                childAspectRatio: 1.2, // width/height ratio of each item
+              ),
+              itemCount: controller.files.length,
+              itemBuilder: (context, index) {
+                final List recentFiles = controller.files;
+                final String name = recentFiles[index]["fileName"];
+                final String fileId = recentFiles[index]["_id"];
+                return SizedBox(
+                  height: 100,
+                  child: CustomContainer(
+                  icon: Icons.file_copy,
+                  iconColor: Colors.white,
+                  text: name,
+                  ontap: () {
+                    print("FILE ID:$fileId");
+                    controller.previewFile(fileId);
+                  },
+                  ));
+              }))
           ],
         ),
       ),
-    )));
+    )),
+    floatingActionButton: FloatingActionButton(onPressed: (){
+      controller.pickMultipleFiles();
+    },
+     backgroundColor: const Color.fromARGB(255, 78, 78, 135),
+    child: const Icon(Icons.add,color: Colors.white,),
+    ),backgroundColor: const Color(0xFF24243E),);
   }
 }

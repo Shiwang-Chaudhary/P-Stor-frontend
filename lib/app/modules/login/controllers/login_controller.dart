@@ -13,7 +13,8 @@ class LoginController extends GetxController {
 
   Future login() async {
   try {
-    const url = "http://192.168.1.12:3000/api/users/login";
+    log("LOGIN API HIT.........");
+    const url = "http://192.168.1.3:3000/api/users/login";
     final uri = Uri.parse(url);
     final response = await http.post(
       uri,

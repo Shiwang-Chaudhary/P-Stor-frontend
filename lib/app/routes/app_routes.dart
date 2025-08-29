@@ -7,4 +7,5 @@ abstract class Routes {
   static const SETTINGS = '/settings';
   static const STORAGE_DETAILS = '/storage-details';
   static const PROFILE = '/profile';
+  static const VIDEO_PREVIEW_PAGE = '/video-preview-page';
 }

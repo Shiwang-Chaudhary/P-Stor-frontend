@@ -16,6 +16,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/storageDetails/bindings/storage_details_binding.dart';
 import '../modules/storageDetails/views/storage_details_view.dart';
+import '../modules/videoPreviewPage/bindings/video_preview_page_binding.dart';
+import '../modules/videoPreviewPage/views/video_preview_page_view.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -63,6 +65,11 @@ class AppPages {
       name: Routes.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: Routes.VIDEO_PREVIEW_PAGE,
+      page: () => const VideoPreviewPageView(),
+      binding: VideoPreviewPageBinding(),
     ),
   ];
 }
