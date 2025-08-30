@@ -26,25 +26,32 @@ class VideoPreviewPageController extends GetxController {
   // }
 late VideoPlayerController videoController;
   late String path;
-  var isInitialized = false.obs; // reactive flag
+  var isInitialized = false.obs; 
+  var isPlaying = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    path = Get.arguments; // get file path from arguments
+    path = Get.arguments; 
     initializePlayer();
   }
 
   Future<void> initializePlayer() async {
     videoController = VideoPlayerController.file(File(path));
     await videoController.initialize();
-    videoController.play(); // auto-play
-    isInitialized.value = true; // notify UI
+    videoController.play();//for AUTO PLAY
+    videoController.addListener(() {
+      isPlaying.value = videoController.value.isPlaying;
+    });
+    isInitialized.value = true; 
+    update();
   }
 
   @override
-  void dispose() {
+  void onClose() {
+    videoController.pause();
     videoController.dispose();
-    super.dispose();
+    super.onClose();
   }
+
 }

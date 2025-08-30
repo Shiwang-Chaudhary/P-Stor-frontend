@@ -1,5 +1,13 @@
 import 'package:get/get.dart';
 
+import '../modules/allAudios/bindings/all_audios_binding.dart';
+import '../modules/allAudios/views/all_audios_view.dart';
+import '../modules/allDocs/bindings/all_docs_binding.dart';
+import '../modules/allDocs/views/all_docs_view.dart';
+import '../modules/allImages/bindings/all_images_binding.dart';
+import '../modules/allImages/views/all_images_view.dart';
+import '../modules/allVideos/bindings/all_videos_binding.dart';
+import '../modules/allVideos/views/all_videos_view.dart';
 import '../modules/bottomNavBar/bindings/bottom_nav_bar_binding.dart';
 import '../modules/bottomNavBar/views/bottom_nav_bar_view.dart';
 import '../modules/home/home_binding.dart';
@@ -70,6 +78,26 @@ class AppPages {
       name: Routes.VIDEO_PREVIEW_PAGE,
       page: () => const VideoPreviewPageView(),
       binding: VideoPreviewPageBinding(),
+    ),
+    GetPage(
+      name: Routes.ALL_IMAGES,
+      page: () => const AllImagesView(),
+      binding: AllImagesBinding(),
+    ),
+    GetPage(
+      name: Routes.ALL_AUDIOS,
+      page: () => const AllAudiosView(),
+      binding: AllAudiosBinding(),
+    ),
+    GetPage(
+      name: Routes.ALL_DOCS,
+      page: () => const AllDocsView(),
+      binding: AllDocsBinding(),
+    ),
+    GetPage(
+      name: Routes.ALL_VIDEOS,
+      page: () => const AllVideosView(),
+      binding: AllVideosBinding(),
     ),
   ];
 }

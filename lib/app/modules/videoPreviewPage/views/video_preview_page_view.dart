@@ -28,7 +28,7 @@ class VideoPreviewPageView extends GetView<VideoPreviewPageController> {
                 ? controller.videoController.pause()
                 : controller.videoController.play();
           },
-          child: Icon(controller.videoController.value.isPlaying
+          child: Icon(controller.isPlaying.value
               ? Icons.pause
               : Icons.play_arrow),
         );

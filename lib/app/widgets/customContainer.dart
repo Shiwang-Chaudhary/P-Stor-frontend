@@ -4,6 +4,7 @@ import 'package:p_stor/app/widgets/customText.dart';
 
 class CustomContainer extends StatelessWidget {
   final IconData? icon;
+  final double? iconSize;
   final String? text;
   final Color? iconColor;
   final Color? textColor;
@@ -13,6 +14,7 @@ class CustomContainer extends StatelessWidget {
     required this.text,
     this.iconColor,
     this.textColor,
+    this.iconSize,
     required this.ontap
    });
 
@@ -33,7 +35,7 @@ class CustomContainer extends StatelessWidget {
               Icon(
               icon ??  Icons.folder,
                 color:iconColor?? Colors.yellow,
-                size: 55,
+                size: iconSize??55,
               ),
               const SizedBox(height: 8,),
                CustomText(text: text ??"Folder 1",maxLines: 1,color: Colors.white,weight: FontWeight.w400,size: 18,)

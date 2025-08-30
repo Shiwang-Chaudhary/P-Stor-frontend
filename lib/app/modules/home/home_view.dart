@@ -14,9 +14,10 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      backgroundColor: Colors.white,
         body: BgContainer(
             body: Padding(
-      padding: EdgeInsets.all(24.0),
+      padding: const EdgeInsets.all(24.0),
       child: Column(
        //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

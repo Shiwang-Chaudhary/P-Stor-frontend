@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:p_stor/app/routes/app_routes.dart';
 import 'package:p_stor/app/widgets/bgContainer.dart';
 import 'package:p_stor/app/widgets/customContainer.dart';
 import 'package:p_stor/app/widgets/customText.dart';
@@ -48,14 +49,18 @@ class HomePageView extends GetView<HomePageController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Get.toNamed(Routes.ALL_IMAGES);
+                  },
                   icon: Icons.image,
                   text: "Images",
                   iconColor: Colors.green,
                 ),
                 //SizedBox(width: 20,),
                 CustomContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Get.toNamed(Routes.ALL_AUDIOS);
+                  },
                   icon: Icons.music_note,
                   text: "Audio",
                   iconColor: Colors.red,
@@ -69,14 +74,18 @@ class HomePageView extends GetView<HomePageController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Get.toNamed(Routes.ALL_VIDEOS);
+                  },
                   icon: Icons.video_file,
                   text: "Video",
                   iconColor: Colors.pinkAccent,
                 ),
                 //SizedBox(width: 20,),
                 CustomContainer(
-                  ontap: () {},
+                  ontap: () {
+                    Get.toNamed(Routes.ALL_DOCS);
+                  },
                   icon: Icons.file_copy,
                   text: "Documents",
                   iconColor: Colors.blue,
@@ -141,6 +150,6 @@ class HomePageView extends GetView<HomePageController> {
     },
      backgroundColor: const Color.fromARGB(255, 78, 78, 135),
     child: const Icon(Icons.add,color: Colors.white,),
-    ),backgroundColor: const Color(0xFF24243E),);
+    ),backgroundColor:  Colors.white,);
   }
 }
