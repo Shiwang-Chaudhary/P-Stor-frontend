@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/all_docs_controller.dart';
 
 class AllDocsView extends GetView<AllDocsController> {
-  const AllDocsView({Key? key}) : super(key: key);
+  const AllDocsView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

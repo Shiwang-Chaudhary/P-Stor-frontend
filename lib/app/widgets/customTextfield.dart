@@ -29,9 +29,7 @@ class CustomTextfield extends StatelessWidget {
       controller: controller,
       obscureText: isPassword ? !isPasswordVisible : false,
       style: GoogleFonts.outfit(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: Colors.black),
+          fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black),
       decoration: InputDecoration(
         suffixIcon: showSuffixIcon
             ? IconButton(
@@ -50,8 +48,7 @@ class CustomTextfield extends StatelessWidget {
           size: 30,
         ),
         hintText: hintText,
-        hintStyle:
-            GoogleFonts.outfit(fontSize: 16, color: Colors.black),
+        hintStyle: GoogleFonts.outfit(fontSize: 16, color: Colors.black),
         enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(6))),
@@ -61,6 +58,6 @@ class CustomTextfield extends StatelessWidget {
         contentPadding:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       ),
-    );;
+    );
   }
 }

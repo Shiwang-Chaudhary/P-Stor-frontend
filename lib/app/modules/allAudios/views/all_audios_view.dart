@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/all_audios_controller.dart';
 
 class AllAudiosView extends GetView<AllAudiosController> {
-  const AllAudiosView({Key? key}) : super(key: key);
+  const AllAudiosView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

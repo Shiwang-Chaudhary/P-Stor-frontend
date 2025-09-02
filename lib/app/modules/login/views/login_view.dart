@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:p_stor/app/routes/app_routes.dart';
 import 'package:p_stor/app/widgets/EmailTextField.dart';
 import 'package:p_stor/app/widgets/PassTextfield.dart';
 import 'package:p_stor/app/widgets/bgContainer.dart';

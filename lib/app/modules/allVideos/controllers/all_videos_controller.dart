@@ -27,16 +27,14 @@ class AllVideosController extends GetxController {
       const url = "http://192.168.1.5:3000/files/getAll";
       final uri = Uri.parse(url);
 
-      final response = await http.post(uri, headers: {
-        "Authorization": "Bearer $token"
-      });
+      final response =
+          await http.post(uri, headers: {"Authorization": "Bearer $token"});
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         final videos = data["files"]["videos"];
         videoFiles.assignAll(videos);
 
-        // Generate thumbnails in background
         for (var video in videos) {
           final fileUrl = video["fileUrl"];
           _generateThumbnail(fileUrl);

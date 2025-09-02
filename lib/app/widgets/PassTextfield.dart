@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PassTextfield extends StatelessWidget {
   final TextEditingController controller;
-  const PassTextfield({super.key,required this.controller});
+  const PassTextfield({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,11 @@ class PassTextfield extends StatelessWidget {
         filled: true,
         hintStyle: GoogleFonts.outfit(),
         hintText: "Enter your password",
-        prefixIcon: const Icon(Icons.key,size: 30,color: Color.fromRGBO(54, 51, 136, 1),),
+        prefixIcon: const Icon(
+          Icons.key,
+          size: 30,
+          color: Color.fromRGBO(54, 51, 136, 1),
+        ),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(7)),
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
