@@ -10,7 +10,6 @@ class AllVideosController extends GetxController {
   var videoFiles = [].obs;
   var isloading = true.obs;
 
-  // Map: videoUrl -> thumbnail bytes
   var thumbnails = <String, Uint8List?>{}.obs;
 
   @override
