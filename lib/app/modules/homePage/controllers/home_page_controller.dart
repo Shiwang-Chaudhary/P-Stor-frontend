@@ -14,7 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePageController extends GetxController {
   TextEditingController searchController = TextEditingController();
-
+  var isOpeningFile = false.obs;
   @override
   void onInit() {
     // TODO: implement onInit
@@ -31,7 +31,6 @@ class HomePageController extends GetxController {
     } else {
       print("User canceled the picker.");
     }
-
   }
 
   Future getRecentFiles() async {
@@ -46,11 +45,11 @@ class HomePageController extends GetxController {
       final data = jsonDecode(response.body);
       if (response.statusCode == 200) {
         final List fetchedFiles = data["files"];
-        files.clear(); //  old data htane k liye
-        files.addAll(fetchedFiles); // new data daalne k liye
+        // files.clear(); //  old data htane k liye
+        files.assignAll(fetchedFiles); // new data daalne k liye
         log("FILES:$files");
         log("RecentFiles:$fetchedFiles");
-        } else {
+      } else {
         log("RecentFilesAPI error:${data["message"]}");
       }
     } catch (e) {
@@ -77,7 +76,7 @@ class HomePageController extends GetxController {
 
       // Create a multipart request
       final request = http.MultipartRequest("POST", uri);
-        request.headers['Authorization'] = "Bearer $token";
+      request.headers['Authorization'] = "Bearer $token";
 
       // Add each file to the request
       for (var file in files) {
@@ -138,6 +137,17 @@ class HomePageController extends GetxController {
       }
     } catch (e) {
       print("Error previewing file: $e");
+    }
+  }
+
+  Future<void> openFile(String fileId) async {
+    try {
+      isOpeningFile.value = true;
+      await previewFile(fileId);
+    } catch (e) {
+      print("Error opening file: $e");
+    } finally {
+      isOpeningFile.value = false;
     }
   }
 }

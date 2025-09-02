@@ -4,6 +4,7 @@ import 'package:p_stor/app/widgets/customText.dart';
 class CustomContainer extends StatelessWidget {
   final IconData? icon;
   final double? iconSize;
+  final double? textSize;
   final String? text;
   final Color? iconColor;
   final Color? textColor;
@@ -14,6 +15,7 @@ class CustomContainer extends StatelessWidget {
       required this.text,
       this.iconColor,
       this.textColor,
+      this.textSize,
       this.iconSize,
       required this.ontap});
 
@@ -44,7 +46,7 @@ class CustomContainer extends StatelessWidget {
                 maxLines: 1,
                 color: Colors.white,
                 weight: FontWeight.w400,
-                size: 18,
+                size: textSize ?? 18,
               )
             ],
           ),

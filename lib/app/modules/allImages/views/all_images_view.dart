@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:p_stor/app/routes/app_routes.dart';
 import 'package:p_stor/app/widgets/customText.dart';
 
 import '../controllers/all_images_controller.dart';
@@ -39,7 +40,9 @@ class AllImagesView extends GetView<AllImagesController> {
                   final fileUrl = (controller.imagesFiles)[index]["fileUrl"];
 
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Get.toNamed(Routes.IMAGE_VIEWER, arguments: fileUrl);
+                    },
                     child: Container(
                       // height: 150,
                       // width: 170,

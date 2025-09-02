@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/ImageViewer/bindings/image_viewer_binding.dart';
+import '../modules/ImageViewer/views/image_viewer_view.dart';
 import '../modules/allAudios/bindings/all_audios_binding.dart';
 import '../modules/allAudios/views/all_audios_view.dart';
 import '../modules/allDocs/bindings/all_docs_binding.dart';
@@ -98,6 +100,11 @@ class AppPages {
       name: Routes.ALL_VIDEOS,
       page: () => const AllVideosView(),
       binding: AllVideosBinding(),
+    ),
+    GetPage(
+      name: Routes.IMAGE_VIEWER,
+      page: () => const ImageViewerView(),
+      binding: ImageViewerBinding(),
     ),
   ];
 }
