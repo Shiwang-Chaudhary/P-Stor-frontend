@@ -1,9 +1,77 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:mime/mime.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AllDocsController extends GetxController {
-  //TODO: Implement AllDocsController
+  var isloading = true.obs;
+  var docFiles = [].obs;
 
-  final count = 0.obs;
+  @override
+  void onInit() {
+    super.onInit();
+    getAllDocs();
+  }
 
-  void increment() => count.value++;
+  Future<void> getAllDocs() async {
+    try {
+      log("GET ALL API HIT...");
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString("token");
+      const url = "http://192.168.1.5:3000/files/getAll";
+      final uri = Uri.parse(url);
+
+      final response = await http.post(uri, headers: {
+        "Authorization": "Bearer $token",
+      });
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final docs = data["files"]["documents"];
+        docFiles.assignAll(docs);
+        isloading.value = false;
+        log("DOCS: $docs");
+      } else {
+        log("ERROR: ${response.statusCode}");
+        isloading.value = false;
+      }
+    } catch (e) {
+      log("LOADING ERROR(VIDEOS): ${e.toString()}");
+      isloading.value = false;
+    }
+  }
+
+  Future previewFile(String fileId) async {
+    log("PREVIEW API HIT.....");
+    try {
+      final url = "http://192.168.1.5:3000/files/preview/$fileId";
+      //const url = "";
+      final uri = Uri.parse(url);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString("token");
+      final response = await http.post(uri, headers: {
+        "Authorization": "Bearer $token",
+      });
+      log("StatusCode for Previewing file:${response.statusCode}");
+      if (response.statusCode == 200) {
+        final tempDir = await getTemporaryDirectory();
+        final filePath = "${tempDir.path}/previewed_file";
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        final mimeType =
+            lookupMimeType(filePath, headerBytes: response.bodyBytes);
+        log("Detected mime type: $mimeType");
+        await OpenFile.open(filePath);
+      } else {
+        print("Failed to preview file: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error previewing file: $e");
+    }
+  }
 }

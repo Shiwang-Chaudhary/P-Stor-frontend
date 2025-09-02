@@ -5,7 +5,6 @@ import 'package:p_stor/app/modules/settings/views/settings_view.dart';
 import 'package:p_stor/app/modules/storageDetails/views/storage_details_view.dart';
 
 class BottomNavBarController extends GetxController {
-
   var selectedIndex = 0.obs;
   final pages = [
     const HomePageView(),
@@ -13,8 +12,7 @@ class BottomNavBarController extends GetxController {
     const SettingsView(),
     const ProfileView()
   ];
-  void barNavigation(int index){
+  void barNavigation(int index) {
     selectedIndex.value = index;
-
-}
+  }
 }

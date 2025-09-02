@@ -65,13 +65,41 @@ class StorageDetailsView extends GetView<StorageDetailsController> {
                 size: 20,
                 weight: FontWeight.w400,
               ),
-              const SizedBox(height: 20,),
-              const CustomText(text: "Storage Breakdown",size: 23,color: Colors.white,weight: FontWeight.bold,),
-              const SizedBox(height: 30,),
-              const CustomStorageTile(title: "Documents", icon: Icons.file_copy, data: "30GB", percent: "30"),
-              const CustomStorageTile(title: "Images", icon: Icons.image,iconColor: Colors.green, data: "30GB", percent: "30"),
-              const CustomStorageTile(title: "Videos", icon: Icons.video_file,iconColor: Colors.pinkAccent,data: "30GB", percent: "30"),
-              const CustomStorageTile(title: "Audios", icon: Icons.music_note,iconColor: Colors.red, data: "30GB", percent: "30"),
+              const SizedBox(
+                height: 20,
+              ),
+              const CustomText(
+                text: "Storage Breakdown",
+                size: 23,
+                color: Colors.white,
+                weight: FontWeight.bold,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const CustomStorageTile(
+                  title: "Documents",
+                  icon: Icons.file_copy,
+                  data: "30GB",
+                  percent: "30"),
+              const CustomStorageTile(
+                  title: "Images",
+                  icon: Icons.image,
+                  iconColor: Colors.green,
+                  data: "30GB",
+                  percent: "30"),
+              const CustomStorageTile(
+                  title: "Videos",
+                  icon: Icons.video_file,
+                  iconColor: Colors.pinkAccent,
+                  data: "30GB",
+                  percent: "30"),
+              const CustomStorageTile(
+                  title: "Audios",
+                  icon: Icons.music_note,
+                  iconColor: Colors.red,
+                  data: "30GB",
+                  percent: "30"),
             ],
           ),
         ));

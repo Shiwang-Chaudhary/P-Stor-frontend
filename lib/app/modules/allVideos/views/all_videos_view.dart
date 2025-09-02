@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:p_stor/app/routes/app_routes.dart';
 import 'package:p_stor/app/widgets/customText.dart';
 import '../controllers/all_videos_controller.dart';
 
@@ -42,7 +41,8 @@ class AllVideosView extends GetView<AllVideosController> {
 
             return GestureDetector(
               onTap: () {
-                Get.toNamed(Routes.VIDEO_PREVIEW_PAGE, arguments: fileUrl);
+                // Navigate to video preview page
+                // Get.toNamed(Routes.VIDEO_PREVIEW_PAGE, arguments: fileUrl);
               },
               child: Container(
                 decoration: BoxDecoration(

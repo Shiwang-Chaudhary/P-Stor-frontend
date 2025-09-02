@@ -12,4 +12,6 @@ abstract class Routes {
   static const ALL_AUDIOS = '/all-audios';
   static const ALL_DOCS = '/all-docs';
   static const ALL_VIDEOS = '/all-videos';
+  static const PDF_VIEWER_PAGE = '/pdf-viewer-page';
+  static const IMAGE_VIEWER = '/image-viewer';
 }
