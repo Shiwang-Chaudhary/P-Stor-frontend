@@ -1,9 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreviewPageController extends GetxController {
-  
   // late VideoPlayerController videoController;
   // late String path;
   // @override
@@ -21,30 +21,34 @@ class VideoPreviewPageController extends GetxController {
   // @override
   // void dispose() {
   //   videoController.dispose();
-    
+
   //   super.dispose();
   // }
-late VideoPlayerController videoController;
+  late VideoPlayerController videoController;
   late String path;
-  var isInitialized = false.obs; 
+  var isInitialized = false.obs;
   var isPlaying = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    path = Get.arguments; 
+    path = Get.arguments;
     initializePlayer();
   }
-
+  
   Future<void> initializePlayer() async {
-    videoController = VideoPlayerController.file(File(path));
-    await videoController.initialize();
-    videoController.play();//for AUTO PLAY
-    videoController.addListener(() {
-      isPlaying.value = videoController.value.isPlaying;
-    });
-    isInitialized.value = true; 
-    update();
+    try {
+      videoController = VideoPlayerController.file(File(path));
+      await videoController.initialize();
+      videoController.play();
+      videoController.addListener(() {
+        isPlaying.value = videoController.value.isPlaying;
+      });
+      isInitialized.value = true;
+      update();
+    } catch (e) {
+      log("Video playing error:${e.toString()}");
+    }
   }
 
   @override
@@ -53,5 +57,4 @@ late VideoPlayerController videoController;
     videoController.dispose();
     super.onClose();
   }
-
 }

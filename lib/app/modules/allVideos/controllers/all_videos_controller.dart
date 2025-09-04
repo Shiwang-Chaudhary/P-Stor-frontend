@@ -1,16 +1,22 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:mime/mime.dart';
+import 'package:p_stor/app/routes/app_routes.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class AllVideosController extends GetxController {
   var videoFiles = [].obs;
+  var isOpeningFile = false.obs;
+
   var isloading = true.obs;
 
-  var thumbnails = <String, Uint8List?>{}.obs;
+  //var thumbnails = <String, Uint8List?>{}.obs;
 
   @override
   void onInit() {
@@ -35,11 +41,11 @@ class AllVideosController extends GetxController {
         final videos = data["files"]["videos"];
         videoFiles.assignAll(videos);
 
-        // Generate thumbnails in background
-        for (var video in videos) {
-          final fileUrl = video["fileUrl"];
-          generateThumbnail(fileUrl);
-        }
+        // // Generate thumbnails in background
+        // for (var video in videos) {
+        //   final fileUrl = video["fileUrl"];
+        //   generateThumbnail(fileUrl);
+        // }
 
         isloading.value = false;
         log("VIDEOS: $videos");
@@ -52,22 +58,64 @@ class AllVideosController extends GetxController {
       isloading.value = false;
     }
   }
-
-  Future<void> generateThumbnail(String videoUrl) async {
+  Future previewFile(String fileId) async {
+    log("PREVIEW API HIT.....");
     try {
-      log("THUMBNAIL FUNCTION HIT......");
-      final thumb = await VideoThumbnail.thumbnailData(
-        video: videoUrl,
-        imageFormat: ImageFormat.JPEG,
-        maxWidth: 200,
-        quality: 50,
-      );
+      final url = "http://192.168.1.5:3000/files/preview/$fileId";
+      //const url = "";
+      final uri = Uri.parse(url);
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString("token");
+      final response = await http.post(uri, headers: {
+        "Authorization": "Bearer $token",
+      });
+      log("StatusCode for Previewing file:${response.statusCode}");
+      if (response.statusCode == 200) {
+        final tempDir = await getTemporaryDirectory();
+        final filePath = "${tempDir.path}/previewed_file";
+        final file = File(filePath);
+        await file.writeAsBytes(response.bodyBytes);
+        final mimeType =
+            lookupMimeType(filePath, headerBytes: response.bodyBytes);
+        log("Detected mime type: $mimeType");
 
-      thumbnails[videoUrl] = thumb;
-      log("Tumbnail map: $thumbnails");
-      thumbnails.refresh();
+        
+          Get.toNamed(Routes.VIDEO_PREVIEW_PAGE, arguments: filePath);
+       
+      } else {
+        print("Failed to preview file: ${response.statusCode}");
+      }
     } catch (e) {
-      log("Thumbnail error for $videoUrl: $e");
+      print("Error previewing file: $e");
     }
   }
+
+  Future<void> openFile(String fileId) async {
+    try {
+      isOpeningFile.value = true;
+      await previewFile(fileId);
+    } catch (e) {
+      print("Error opening file: $e");
+    } finally {
+      isOpeningFile.value = false;
+    }
+  }
+
+  // Future<void> generateThumbnail(String videoUrl) async {
+  //   try {
+  //     log("THUMBNAIL FUNCTION HIT......");
+  //     final thumb = await VideoThumbnail.thumbnailData(
+  //       video: videoUrl,
+  //       imageFormat: ImageFormat.JPEG,
+  //       maxWidth: 200,
+  //       quality: 50,
+  //     );
+
+  //     thumbnails[videoUrl] = thumb;
+  //     log("Tumbnail map: $thumbnails");
+  //     thumbnails.refresh();
+  //   } catch (e) {
+  //     log("Thumbnail error for $videoUrl: $e");
+  //   }
+  // }
 }

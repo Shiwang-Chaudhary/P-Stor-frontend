@@ -30,7 +30,7 @@ class ProfileView extends GetView<ProfileController> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Center(
+                Center(
                   child: Column(
                     children: [
                       CircleAvatar(
@@ -45,20 +45,24 @@ class ProfileView extends GetView<ProfileController> {
                       SizedBox(
                         height: 10,
                       ),
-                      CustomText(
-                        text: "Shiwang Chaudhary",
-                        size: 26,
-                        color: Colors.white,
-                        weight: FontWeight.w500,
+                      Obx(
+                        () => CustomText(
+                          text: controller.name.value.isEmpty ? "NAME" : controller.name.value ,
+                          size: 26,
+                          color: Colors.white,
+                          weight: FontWeight.w500,
+                        ),
                       ),
                       SizedBox(
                         height: 8,
                       ),
-                      CustomText(
-                        text: "shiwangchaudhary909@gmail.com",
-                        size: 19,
-                        color: Colors.white,
-                        weight: FontWeight.w500,
+                      Obx(
+                        () => CustomText(
+                          text: controller.email.value.isEmpty ? "emaiL@gmail.com" : controller.email.value,
+                          size: 19,
+                          color: Colors.white,
+                          weight: FontWeight.w500,
+                        ),
                       ),
                       SizedBox(
                         height: 30,

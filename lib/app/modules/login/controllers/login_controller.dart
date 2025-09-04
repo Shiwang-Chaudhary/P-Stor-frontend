@@ -30,12 +30,17 @@ class LoginController extends GetxController {
 
       if (response.statusCode == 200) {
         final token = data["token"];
+        final name = data["username"];
+        final email = data["email"];
         log("Login body:$data");
         log("TOKEN:$token");
+        log("name:$name");
+        log("email:$email");
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString("token", token);
-
+        await prefs.setString("name", name);
+        await prefs.setString("email", email);
         Get.snackbar("Login", data["message"]);
         //Get.offAll(() => Scaffold(body: Center(child: Text("Logged in OK"))));
 
