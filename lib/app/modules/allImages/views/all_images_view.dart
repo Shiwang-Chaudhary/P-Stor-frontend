@@ -16,6 +16,19 @@ class AllImagesView extends GetView<AllImagesController> {
             color: Colors.white,
             size: 27,
           ),
+          actions: [
+            Obx(() => controller.selectedFile.isNotEmpty
+                ? IconButton(
+                    onPressed: () {
+                      controller.showDeleteDialog(() {
+                        controller.deleteFile(controller.selectedFile);
+                      });
+                    },
+                    icon:
+                        const Icon(Icons.delete, color: Colors.white, size: 28),
+                  )
+                : const SizedBox.shrink())
+          ],
           centerTitle: true,
           backgroundColor: const Color(0xFF24243E),
         ),
@@ -39,22 +52,49 @@ class AllImagesView extends GetView<AllImagesController> {
                   final fileId = (controller.imagesFiles)[index]["_id"];
                   final fileUrl = (controller.imagesFiles)[index]["fileUrl"];
 
-                  return GestureDetector(
-                    onTap: () {
+                  return GestureDetector(onTap: () {
+                    if (controller.selectedFile.isNotEmpty) {
+                      controller.onSelected(fileId); // toggle selection
+                    } else {
                       Get.toNamed(Routes.IMAGE_VIEWER, arguments: fileUrl);
-                    },
-                    child: Container(
-                      // height: 150,
-                      // width: 170,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(9),
-                          color: const Color.fromRGBO(60, 60, 79, 1)),
-                      child: Image.network(
-                        fileUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  );
+                    }
+                  }, onLongPress: () {
+                    controller.onSelected(fileId);
+                  }, child: Obx(() {
+                    final isSelected = controller.selectedFile.contains(fileId);
+                    return Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(9),
+                            color: const Color.fromRGBO(60, 60, 79, 1),
+                            border: isSelected
+                                ? Border.all(color: Colors.blue, width: 3)
+                                : null,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(9),
+                            child: Image.network(
+                              fileUrl,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                          ),
+                        ),
+                        if (isSelected)
+                          const Positioned(
+                            top: 8,
+                            right: 8,
+                            child: Icon(
+                              Icons.check_circle,
+                              color: Colors.blue,
+                              size: 28,
+                            ),
+                          ),
+                      ],
+                    );
+                  }));
                 })));
   }
 }

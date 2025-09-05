@@ -16,6 +16,18 @@ class AllVideosView extends GetView<AllVideosController> {
           color: Colors.white,
           size: 27,
         ),
+        actions: [
+          Obx(() => controller.selectedFile.isNotEmpty
+              ? IconButton(
+                  onPressed: () {
+                    controller.showDeleteDialog(() {
+                      controller.deleteFile(controller.selectedFile);
+                    });
+                  },
+                  icon: const Icon(Icons.delete, color: Colors.white, size: 28),
+                )
+              : const SizedBox.shrink())
+        ],
         centerTitle: true,
         backgroundColor: const Color(0xFF24243E),
       ),
@@ -34,7 +46,7 @@ class AllVideosView extends GetView<AllVideosController> {
               crossAxisCount: 3,
               mainAxisSpacing: 6,
               crossAxisSpacing: 6,
-              childAspectRatio: 1.2,
+              childAspectRatio: 1.15,
             ),
             padding: const EdgeInsets.symmetric(vertical: 10),
             itemBuilder: (context, index) {
@@ -45,62 +57,62 @@ class AllVideosView extends GetView<AllVideosController> {
 
               return GestureDetector(
                 onTap: () {
-                  controller.openFile(fileId);
+                  if (controller.selectedFile.isNotEmpty) {
+                    controller.onSelected(fileId); // toggle selection
+                  } else {
+                     controller.openFile(fileId);
+                  }
+                 
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9),
-                    color: const Color.fromRGBO(60, 60, 79, 1),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.video_file,
-                          color: Colors.white,
-                          size: 40,
+                onLongPress: () {
+                  controller.onSelected(fileId);
+                },
+                child: Obx(() {
+                  final isSelected = controller.selectedFile.contains(fileId);
+                  return Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(9),
+                          color: isSelected
+                              ? const Color.fromRGBO(36, 36, 62, 1)
+                              : const Color.fromRGBO(60, 60, 79, 1),
+                          border: isSelected
+                              ? Border.all(color: Colors.blue, width: 3)
+                              : null,
                         ),
-                        SizedBox(
-                          height: 9,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20.0),
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.video_file,
+                                color: isSelected ? Colors.blue : Colors.white,
+                                size: 40,
+                              ),
+                              const SizedBox(height: 10),
+                              CustomText(
+                                text: fileName,
+                                size: 14,
+                                color: isSelected ? Colors.blue : Colors.white,
+                              ),
+                            ],
+                          ),
                         ),
-                        CustomText(
-                          text: fileName,
-                          size: 16,
-                          color: Colors.white,
-                        )
-                      ],
-                    ),
-                  ),
-                  // child: thumb == null
-                  //     ?
-                  //     const Center(
-                  //         child: CircularProgressIndicator(
-                  //           strokeWidth: 2,
-                  //           color: Colors.white,
-                  //         ),
-                  //       )
-                  //     : Stack(
-                  //         fit: StackFit.expand,
-                  //         children: [
-                  //           ClipRRect(
-                  //             borderRadius: BorderRadius.circular(9),
-                  //             child: Image.memory(
-                  //               thumb,
-                  //               fit: BoxFit.cover,
-                  //             ),
-                  //           ),
-                  //           const Align(
-                  //             alignment: Alignment.center,
-                  //             child: Icon(
-                  //               Icons.play_circle_fill,
-                  //               color: Colors.white,
-                  //               size: 36,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                ),
+                      ),
+                      if (isSelected)
+                        const Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Icon(
+                            Icons.check_circle,
+                            color: Colors.blue,
+                            size: 26,
+                          ),
+                        ),
+                    ],
+                  );
+                }),
               );
             },
           );

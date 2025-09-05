@@ -2,15 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
+import 'package:p_stor/app/widgets/customText.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AllImagesController extends GetxController {
   final RxList imagesFiles = [].obs;
+  var selectedFile = [].obs;
   var isloading = true.obs;
   @override
   void onInit() {
@@ -75,9 +79,71 @@ class AllImagesController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    log("AllImagesController disposed");
-    super.onClose();
+
+onSelected(String fileId) {
+    if (selectedFile.contains(fileId)) {
+      selectedFile.remove(fileId);
+      log("Selected File List: $selectedFile");
+    } else {
+      selectedFile.add(fileId);
+      log("Selected File List: $selectedFile");
+    }
+  }
+
+  Future deleteFile(List selectedFile) async {
+    try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final String? token = prefs.getString("token");
+      final url = "http://192.168.1.5:3000/files/delete/dummy";
+      final uri = Uri.parse(url);
+      final response = await http.post(uri,
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer $token"
+          },
+          body: jsonEncode({"ids": selectedFile}));
+      if (response.statusCode == 200) {
+        log("DELETE RESPONSE: ${response.body}");
+        this.selectedFile.clear();
+        getAllImages();
+      } else {
+        log("DELETE ERROR: ${response.statusCode}");
+      }
+    } catch (e) {
+      log("DELETE ERROR: ${e.toString()}");
+    }
+  }
+
+  void showDeleteDialog(VoidCallback onConfirm) {
+    Get.defaultDialog(
+      title: "",
+      titlePadding: EdgeInsets.zero, // remove default padding
+      content: Column(
+        children: [
+          CustomText(
+              text: "Delete File",
+              color: Colors.red,
+              size: 20,
+              weight: FontWeight.bold),
+          const SizedBox(height: 20),
+          CustomText(
+              text: "Are you sure you want to delete this file?",
+              color: Colors.white,
+              size: 13,
+              weight: FontWeight.w400),
+        ],
+      ),
+      radius: 15,
+      textCancel: "Cancel",
+      textConfirm: "Delete",
+      backgroundColor: const Color(0xFF24243E),
+      confirmTextColor: Colors.white,
+      buttonColor: Colors.red,
+      onCancel: () {},
+      onConfirm: () {
+        Get.back(); // close dialog
+        onConfirm(); // perform delete
+      },
+    );
   }
 }
