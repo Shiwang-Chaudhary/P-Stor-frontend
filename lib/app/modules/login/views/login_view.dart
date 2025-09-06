@@ -20,12 +20,13 @@ class LoginView extends GetView<LoginController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Image.network(
-                  height: 150,
-                  "https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/9f6b03cb-c12d-4e20-88f1-e2a39ca7b324.png"
-                  //"https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/f97bd4f4-c812-4607-9aa3-dec35851a54b.png"
-                  //"https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/8b5a821f-c279-4e56-a74e-e493a833c379.png"
-                  ),
+              child:Image.asset(
+                    height: 150,
+                    "assets/App_icon.png"
+                     //THIS ICON IS USED HERE: "https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/9f6b03cb-c12d-4e20-88f1-e2a39ca7b324.png"
+                    //"https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/f97bd4f4-c812-4607-9aa3-dec35851a54b.png"
+                    // "https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/8b5a821f-c279-4e56-a74e-e493a833c379.png"
+                    ),
             ),
             const SizedBox(
               height: 20,

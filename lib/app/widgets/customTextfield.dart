@@ -48,7 +48,7 @@ class CustomTextfield extends StatelessWidget {
           size: 30,
         ),
         hintText: hintText,
-        hintStyle: GoogleFonts.outfit(fontSize: 16, color: Colors.black),
+        hintStyle: GoogleFonts.outfit(fontSize: 16, color: Color.fromRGBO(102, 102, 102, 1)),
         enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(6))),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mime/mime.dart';
+import 'package:p_stor/app/modules/homePage/controllers/home_page_controller.dart';
 import 'package:p_stor/app/routes/app_routes.dart';
 import 'package:p_stor/app/widgets/customText.dart';
 import 'package:path_provider/path_provider.dart';
@@ -145,6 +146,7 @@ class AllVideosController extends GetxController {
         log("DELETE RESPONSE: ${response.body}");
         this.selectedFile.clear();
         getAllVideos();
+        Get.find<HomePageController>().getRecentFiles();
       } else {
         log("DELETE ERROR: ${response.statusCode}");
       }

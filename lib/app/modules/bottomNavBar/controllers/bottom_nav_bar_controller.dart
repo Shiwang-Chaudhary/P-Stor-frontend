@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:p_stor/app/modules/homePage/controllers/home_page_controller.dart';
 import 'package:p_stor/app/modules/homePage/views/home_page_view.dart';
 import 'package:p_stor/app/modules/profile/views/profile_view.dart';
 import 'package:p_stor/app/modules/settings/views/settings_view.dart';
@@ -18,7 +19,11 @@ class BottomNavBarController extends GetxController {
     if (index == 1) {
     final storageCtrl = Get.find<StorageDetailsController>();
     storageCtrl.getAllFiles(); 
-  }
+    }
+  // }else if (index == 0) {
+  //   final homePageCtrl = Get.find<HomePageController>();
+  //   homePageCtrl.getRecentFiles(); 
+  // }
     selectedIndex.value = index;
   }
 }

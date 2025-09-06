@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:mime/mime.dart';
 import 'package:open_file/open_file.dart';
+import 'package:p_stor/app/modules/homePage/controllers/home_page_controller.dart';
 import 'package:p_stor/app/widgets/customText.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,8 +80,7 @@ class AllImagesController extends GetxController {
     }
   }
 
-
-onSelected(String fileId) {
+  onSelected(String fileId) {
     if (selectedFile.contains(fileId)) {
       selectedFile.remove(fileId);
       log("Selected File List: $selectedFile");
@@ -106,6 +106,7 @@ onSelected(String fileId) {
         log("DELETE RESPONSE: ${response.body}");
         this.selectedFile.clear();
         getAllImages();
+        Get.find<HomePageController>().getRecentFiles();
       } else {
         log("DELETE ERROR: ${response.statusCode}");
       }
